@@ -443,7 +443,21 @@ const data = [
 ];
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    const tableBody = document.getElementById("player-rows");
 
+    const populateTable = (players) =>{
+        tableBody.innerHTML = "";
+        players.forEach(player => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${player.name}</td>`;
+            row.innerHTML += `<td>${player.team}</td>`;
+            row.innerHTML += `<td>${player.points}</td>`;
+            row.innerHTML += `<td>${player.rebounds}</td>`;
+            row.innerHTML += `<td>${player.assists}</td>`;
+            tableBody.appendChild(row);
+        });
+    }
 
-
-
+    populateTable(data);
+})
