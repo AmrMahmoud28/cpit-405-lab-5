@@ -445,6 +445,7 @@ const data = [
 
 const tableBody = document.getElementById("player-rows");
 const searchInput = document.getElementById("search");
+const teamFilter = document.getElementById("team-filter");
 
 const populateTable = (players) =>{
     tableBody.innerHTML = "";
@@ -463,8 +464,26 @@ const populateTable = (players) =>{
 
 populateTable(data);
 
+const populateFilter = (player) =>{
+    teamFilter.innerHTML = "<option value='all'>All</option>";
+    player.forEach(player => {
+        const option = document.createElement("option");
+        option.value = player.team;
+        option.text = player.team;
+        teamFilter.appendChild(option);
+    });
+}
+
+populateFilter(data);
+
 searchInput.addEventListener("input", (e) => {
     const searchText = e.target.value.toLowerCase();
     const filteredPlayers = data.filter(player => player.name.toLowerCase().includes(searchText));
     populateTable(filteredPlayers);
 })
+
+teamFilter.addEventListener("change", (e) => {
+    const selectedTeam = e.target.value;
+    const filteredTeams = selectedTeam === 'all'? data : data.filter(player => player.team === selectedTeam);
+    populateTable(filteredTeams);
+});
