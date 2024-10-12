@@ -443,21 +443,28 @@ const data = [
 ];
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    const tableBody = document.getElementById("player-rows");
+const tableBody = document.getElementById("player-rows");
+const searchInput = document.getElementById("search");
 
-    const populateTable = (players) =>{
-        tableBody.innerHTML = "";
-        players.forEach(player => {
-            const row = document.createElement("tr");
-            row.innerHTML = `<td>${player.name}</td>`;
-            row.innerHTML += `<td>${player.team}</td>`;
-            row.innerHTML += `<td>${player.points}</td>`;
-            row.innerHTML += `<td>${player.rebounds}</td>`;
-            row.innerHTML += `<td>${player.assists}</td>`;
-            tableBody.appendChild(row);
-        });
-    }
+const populateTable = (players) =>{
+    tableBody.innerHTML = "";
+    players.forEach(player => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${player.name}</td>
+            <td>${player.team}</td>
+            <td>${player.points}</td>
+            <td>${player.rebounds}</td>
+            <td>${player.assists}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
 
-    populateTable(data);
+populateTable(data);
+
+searchInput.addEventListener("input", (e) => {
+    const searchText = e.target.value.toLowerCase();
+    const filteredPlayers = data.filter(player => player.name.toLowerCase().includes(searchText));
+    populateTable(filteredPlayers);
 })
