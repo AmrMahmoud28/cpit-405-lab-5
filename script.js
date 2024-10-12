@@ -447,6 +447,8 @@ const tableBody = document.getElementById("player-rows");
 const searchInput = document.getElementById("search");
 const teamFilter = document.getElementById("team-filter");
 const themeToggle = document.getElementById("dark-mode-toggle");
+const headers = document.querySelectorAll('th');
+let isAscending = true;
 
 const populateTable = (players) =>{
     tableBody.innerHTML = "";
@@ -492,3 +494,17 @@ teamFilter.addEventListener("change", (e) => {
 themeToggle.addEventListener("click", (e) => {
     document.body.classList.toggle("dark-mode");
 });
+
+headers.forEach(header => {
+    header.addEventListener("click", (e) => {
+        const column = e.target.innerText.toLowerCase();
+        const sortedData = [...data].sort((a, b) => {
+            if(typeof a[column] === "string"){
+                return isAscending? a[column].localeCompare(b[column]) : b[column].localeCompare(a[column]);
+            }
+            return isAscending? a[column] - b[column] : b[column] - a[column];
+        });
+        isAscending =!isAscending;
+        populateTable(sortedData);
+    });
+})
