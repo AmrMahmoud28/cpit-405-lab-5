@@ -446,6 +446,7 @@ const data = [
 const tableBody = document.getElementById("player-rows");
 const searchInput = document.getElementById("search");
 const teamFilter = document.getElementById("team-filter");
+const themeToggle = document.getElementById("dark-mode-toggle");
 
 const populateTable = (players) =>{
     tableBody.innerHTML = "";
@@ -486,4 +487,8 @@ teamFilter.addEventListener("change", (e) => {
     const selectedTeam = e.target.value;
     const filteredTeams = selectedTeam === 'all'? data : data.filter(player => player.team === selectedTeam);
     populateTable(filteredTeams);
+});
+
+themeToggle.addEventListener("click", (e) => {
+    document.body.classList.toggle("dark-mode");
 });
